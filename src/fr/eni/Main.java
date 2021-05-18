@@ -1,28 +1,39 @@
+/**
+ * Programme permettant de mettre en pratique la levée d'exception et son traitement à travers
+ * l'utilisation d'une calculatrice
+ */
+
 package fr.eni;
 
 import java.util.InputMismatchException;
-import java.util.Scanner;
-
-import com.sun.javaws.exceptions.ExitException;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import fr.eni.VerificationSaisie;
-import fr.eni.Operation;
 
 public class Main {
     public static void main(String[] args) {
-
-        Scanner scan = new Scanner(System.in);
+        /**
+         * Déclaration des variables
+         */
         int a =0;
         int b =0;
         char operateur = ' ';
         int result = 0;
 
+        /**
+         * Boucle principale du programme
+         */
         do {
             try {
+                //On vérifie que c'est pas un String et que le nombre ne
+                //soit pas plus grand que la capacité de son type
                 a = new VerificationSaisie().verifierNombre();
+                //On vérifie que l'opérateur est bien dans la liste proposé
                 operateur = new VerificationSaisie().verifierOperateur();
+                //On vérifie que l'opérateur n'est pas 'Q' car sinon on lève
+                //une exception permettant de stopper "proprement le programme"
                 operateur = new VerificationSaisie().verifierExit(operateur);
+                //On vérifie que c'est pas un String et que le nombre ne
+                //soit pas plus grand que la capacité de son type
                 b = new VerificationSaisie().verifierNombre();
+                //Choix de l'opération en fonction de l'opérateur
                 switch (operateur) {
                     case '+':
                         result = new Operation().ajouter(a, b);
@@ -41,6 +52,7 @@ public class Main {
                     default:
                         break;
                 }
+                //On affiche le résultat si pas d'exception
                 System.out.println("Le résultat est : " + result);
             }
             catch(InputMismatchException  | MauvaisOperateur e) {
@@ -56,11 +68,8 @@ public class Main {
             catch (DepassementCapaciteException e) {
                 System.err.println("La valeur saisie dépasse les capacités de cette calculatrice. Réessayez...");
             }
-
+        //On reboucle tant que l'opérateur est différent de 'Q'
         }while(operateur != 'Q');
-
-
-
 
     }
 }
